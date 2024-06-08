@@ -14,7 +14,7 @@ public class MovieQuiz {
     String title = scanner.nextLine();
     System.out.print("관람 인원 수: ");
     int num = scanner.nextInt();
-    scanner.nextLine();
+    //scanner.nextLine();
     System.out.print("예매자 이름: ");
     String name = scanner.nextLine();
     System.out.print("예매자 전화번호: ");

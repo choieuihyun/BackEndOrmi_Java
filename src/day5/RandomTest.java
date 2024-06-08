@@ -13,6 +13,8 @@ public class RandomTest {
     ArrayList<Integer> lottoList = new ArrayList<>();
     int temp = 0;
 
+
+
     for (int i = 0; i < 6; i++) {
 
       int number = random.nextInt(45);
