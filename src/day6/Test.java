@@ -1,24 +1,18 @@
 package day6;
 
-import java.util.Scanner;
+import daily_quiz.Computer;
+import daily_quiz.Euihyun;
 
 public class Test {
 
   public static void main(String[] args) {
 
-    Scanner scanner = new Scanner(System.in);
+    Euihyun eh = new Euihyun(26, 5000, "male");
+    Computer computer = new Computer();
+    eh.turnOnComputer(computer, 3000);
+    eh.turnOnComputer(computer, 3000);
+    eh.turnOffComputer(computer);
 
-    System.out.print("계좌번호를 입력해주세요 : ");
-    int accountNumber = scanner.nextInt();
-    scanner.nextLine();
-    System.out.print("소유자 이름을 입력하세요 : ");
-    String name = scanner.nextLine();
 
-    BankAccount bankAccount = new BankAccount(accountNumber, name);
-
-    bankAccount.deposit(100000);
-    bankAccount.withdraw(50000);
-
-    System.out.println(bankAccount.money);
   }
 }
