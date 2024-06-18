@@ -15,11 +15,7 @@ public class Electronics extends Product {
     public String getBrand() {
         return brand;
     }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
+    
     // 수정 필요
     @Override
     public int calculatePrice() {

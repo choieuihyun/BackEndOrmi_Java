@@ -14,10 +14,6 @@ public class Clothing extends Product {
     return size;
   }
 
-  public void setSize(String size) {
-    this.size = size;
-  }
-
   @Override
   public int calculatePrice() {
 

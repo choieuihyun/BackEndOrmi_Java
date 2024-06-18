@@ -9,14 +9,22 @@ public class Main {
 
   public static void main(String[] args) {
 
-    PremiumShoppingMall premiumShoppingMall = new PremiumShoppingMall(20);
+    PremiumShoppingMall premiumShoppingMall = new PremiumShoppingMall(1);
 
     while (true) {
 
-      System.out.println("\n원하는 동작의 번호를 입력하세요.");
-      System.out.println("1. 제품 추가(옷, 전자기기, 식품) / 2. 제품 삭제 / 3. 제품 목록 출력 / 4. 제품 주문 가능 여부");
-      int choice = scanner.nextInt();
-      scanner.nextLine();
+      int choice;
+
+      try {
+        System.out.println("\n원하는 동작의 번호를 입력하세요.");
+        System.out.println("1. 제품 추가(옷, 전자기기, 식품) / 2. 제품 삭제 / 3. 제품 목록 출력 / 4. 제품 주문 가능 여부");
+        choice = scanner.nextInt();
+        scanner.nextLine();
+      } catch (Exception e) {
+        System.out.println("잘못된 입력입니다.");
+        scanner.nextLine(); // 이거에 주의해야하는게 좀 어렵다.
+        continue; // 바로 반복 넘어가야 또 실행된다.
+      }
 
       switch (choice) {
         case 1:
@@ -27,41 +35,58 @@ public class Main {
             if (type.equals("옷")) inputClothes(premiumShoppingMall);
             else if (type.equals("전자기기")) inputElectronics(premiumShoppingMall);
             else if (type.equals("식품")) inputFood(premiumShoppingMall);
-            else System.out.println("잘못된 타입입니다.");
+            else System.out.println("잘못된 입력입니다. 다시 입력하세요.");
             break;
           }
         case 2:
           {
-            System.out.println("삭제할 물품 명을 입력하세요.");
-            String name = scanner.nextLine();
-            premiumShoppingMall.productManagement(name);
+            System.out.println("1. 물품 전체 삭제 / 2. 물품 개별 삭제");
+
+            try {
+              int removeChoice = scanner.nextInt();
+              scanner.nextLine();
+
+              System.out.println("삭제할 물품의 이름을 입력하세요.");
+              String name = scanner.nextLine();
+
+              if(removeChoice == 1) {
+                premiumShoppingMall.removeProduct(name);
+              } else if (removeChoice == 2) {
+                Product product = premiumShoppingMall.searchProduct(name);
+                premiumShoppingMall.removeProduct(product);
+              }
+
+            } catch (Exception e) {
+              System.out.println("잘못된 입력입니다. 다시 입력하세요.");
+            }
+
             break;
           }
         case 3:
           {
-            premiumShoppingMall.productManagement();
+            premiumShoppingMall.displayProducts();
             break;
           }
         case 4:
           {
-            premiumShoppingMall.checkOrderAvailability();
+            System.out.println("주문하고 싶은 제품의 이름을 입력하세요.");
+            String name = scanner.nextLine();
+            Product product = premiumShoppingMall.searchProduct(name);
+
+            if (product != null) {
+              boolean checkOrder = premiumShoppingMall.checkOrderAvailability(product);
+              System.out.println(checkOrder ? "주문이 가능합니다." : "재고가 부족하여 주문에 불가능했습니다.");
+            } else
+              System.out.println("없는 제품입니다. 다시 입력해주세요");
+
+            break;
           }
+        default:
+          System.out.println("올바른 동작(번호)을 선택하세요.");
       }
     }
-
-    //    Product gucci = new Clothing("구찌", 1200000, 10, "L");
-    //    Product electronics = new Electronics("IPhone", 1300000, 2, "Apple");
-    //    Product food = new Food("사과", 4000, 100, 5);
-    //
-    //    PremiumShoppingMall psm = new PremiumShoppingMall(20);
-    //    psm.checkOrderAvailability(food);
-    //
-    //    psm.productManagement(gucci);
-    //    psm.productManagement(electronics);
-    //    psm.productManagement(food);
-    //
-    //    psm.productManagement();
   }
+
 
   static void inputClothes(PremiumShoppingMall shoppingMall) {
 
@@ -75,8 +100,8 @@ public class Main {
     System.out.println("사이즈 입력(S,M,L,XL,XXL,XXXL)");
     String size = scanner.nextLine();
 
-    Product clothes = new Clothing(name, price, stock, size);
-    shoppingMall.productManagement(clothes);
+    Clothing clothes = new Clothing(name, price, stock, size);
+    shoppingMall.addProduct(clothes);
   }
 
   static void inputElectronics(PremiumShoppingMall shoppingMall) {
@@ -91,8 +116,8 @@ public class Main {
     System.out.println("브랜드 명 입력");
     String brand = scanner.nextLine();
 
-    Product electronics = new Electronics(name, price, stock, brand);
-    shoppingMall.productManagement(electronics);
+    Electronics electronics = new Electronics(name, price, stock, brand);
+    shoppingMall.addProduct(electronics);
   }
 
   static void inputFood(PremiumShoppingMall shoppingMall) {
@@ -106,7 +131,7 @@ public class Main {
     System.out.println("유통기한 입력");
     int expiration = scanner.nextInt();
 
-    Product food = new Food(name, price, stock, expiration);
-    shoppingMall.productManagement(food);
+    Food food = new Food(name, price, stock, expiration);
+    shoppingMall.addProduct(food);
   }
 }

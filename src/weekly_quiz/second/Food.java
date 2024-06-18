@@ -14,10 +14,6 @@ public class Food extends Product {
         return expirationDate;
     }
 
-    public void setExpirationDate(int expirationDate) {
-        this.expirationDate = expirationDate;
-    }
-
     @Override
     public int calculatePrice() {
 
