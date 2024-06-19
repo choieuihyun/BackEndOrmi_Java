@@ -27,4 +27,9 @@ public class Electronics extends Product {
 
         return price;
     }
+
+    @Override
+    public String getInfo() {
+        return "브랜드 : " + getBrand();
+    }
 }

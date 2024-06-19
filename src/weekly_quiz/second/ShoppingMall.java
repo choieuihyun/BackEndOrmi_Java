@@ -1,6 +1,5 @@
 package weekly_quiz.second;
 
-import javax.swing.*;
 import java.util.Arrays;
 
 public abstract class ShoppingMall {
@@ -14,7 +13,11 @@ public abstract class ShoppingMall {
     this.productArray = new Product[size];
   }
 
-  public abstract boolean checkOrderAvailability(Product product);
+  public abstract boolean checkOrderAvailability();
+
+  public Product[] getProductArray() {
+    return productArray;
+  }
 
   // 제품 추가 메서드
   public void addProduct(Product product) {
@@ -52,56 +55,25 @@ public abstract class ShoppingMall {
   public void displayProducts() {
 
     for (Product product : productArray) {
-      if (product instanceof Clothing)
+      if(product != null) {
         System.out.println(
-            "물품명 : "
-                + product.getName()
-                + " | "
-                + "재고 : "
-                + product.getStock()
-                + " | "
-                + "가격 : "
-                + product.calculatePrice()
-                + " | "
-                + "사이즈 : "
-                + ((Clothing) product).getSize());
-      else if (product instanceof Electronics)
-        System.out.println(
-            "물품명 : "
-                + product.getName()
-                + " | "
-                + "재고 : "
-                + product.getStock()
-                + " | "
-                + "가격 : "
-                + product.calculatePrice()
-                + " | "
-                + "브랜드 : "
-                + ((Electronics) product).getBrand());
-      else if (product instanceof Food)
-        System.out.println(
-            "물품명 : "
-                + product.getName()
-                + " | "
-                + "재고 : "
-                + product.getStock()
-                + " | "
-                + "가격 : "
-                + product.calculatePrice()
-                + " | "
-                + "유통기한 : "
-                + ((Food) product).getExpirationDate());
+                "물품명 : " + product.getName() +
+                " | 재고 : " + product.getStock() +
+                " | 가격 : " + product.calculatePrice() +
+                " | " + product.getInfo()
+        );
+      }
       else System.out.println("물품이 없습니다.");
     }
   }
 
-  // 제품 주문 가능 여부 판단을 위한 제품 검색 메서드
+  // 제품 주문 가능 여부 판단 or Product 타입으로 삭제를 위한 제품 검색 메서드
   public Product searchProduct(String name) {
-    for (int i = 0; i < productArray.length; i++) {
-      if (productArray[i] != null && productArray[i].getName().equals(name)) {
-        return productArray[i];
+      for (Product product : productArray) {
+          if (product != null && product.getName().equals(name)) {
+              return product;
+          }
       }
-    }
     return null;
   }
 }

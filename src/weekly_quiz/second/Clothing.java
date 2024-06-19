@@ -23,4 +23,9 @@ public class Clothing extends Product {
       default -> 0;
     };
   }
+
+  @Override
+  public String getInfo() {
+    return "사이즈 : " + getSize();
+  }
 }

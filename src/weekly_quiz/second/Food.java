@@ -25,4 +25,9 @@ public class Food extends Product {
         return price;
 
     }
+
+    @Override
+    public String getInfo() {
+        return "유통기한 : " + getExpirationDate();
+    }
 }

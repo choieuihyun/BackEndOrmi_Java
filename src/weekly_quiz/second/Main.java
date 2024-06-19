@@ -1,6 +1,5 @@
 package weekly_quiz.second;
 
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -17,7 +16,7 @@ public class Main {
 
       try {
         System.out.println("\n원하는 동작의 번호를 입력하세요.");
-        System.out.println("1. 제품 추가(옷, 전자기기, 식품) / 2. 제품 삭제 / 3. 제품 목록 출력 / 4. 제품 주문 가능 여부");
+        System.out.println("1. 제품 추가(옷, 전자기기, 식품) / 2. 제품 삭제 / 3. 제품 목록 출력 / 4. 제품 주문 가능 여부 / 5. 종료");
         choice = scanner.nextInt();
         scanner.nextLine();
       } catch (Exception e) {
@@ -49,7 +48,7 @@ public class Main {
               System.out.println("삭제할 물품의 이름을 입력하세요.");
               String name = scanner.nextLine();
 
-              if(removeChoice == 1) {
+              if (removeChoice == 1) {
                 premiumShoppingMall.removeProduct(name);
               } else if (removeChoice == 2) {
                 Product product = premiumShoppingMall.searchProduct(name);
@@ -69,24 +68,30 @@ public class Main {
           }
         case 4:
           {
-            System.out.println("주문하고 싶은 제품의 이름을 입력하세요.");
-            String name = scanner.nextLine();
-            Product product = premiumShoppingMall.searchProduct(name);
+            boolean checkOrder = premiumShoppingMall.checkOrderAvailability();
+            if (checkOrder)
+              System.out.println("주문이 가능합니다");
+            else
+              System.out.println("재고가 부족하여 주문이 불가능합니다");
 
-            if (product != null) {
-              boolean checkOrder = premiumShoppingMall.checkOrderAvailability(product);
-              System.out.println(checkOrder ? "주문이 가능합니다." : "재고가 부족하여 주문에 불가능했습니다.");
-            } else
-              System.out.println("없는 제품입니다. 다시 입력해주세요");
+//            System.out.println("주문하고 싶은 제품의 이름을 입력하세요.");
+//            String name = scanner.nextLine();
+//            Product product = premiumShoppingMall.searchProduct(name);
+//
+//            if (product != null) {
+//              boolean checkOrder = premiumShoppingMall.checkOrderAvailability(product);
+//              System.out.println(checkOrder ? "주문이 가능합니다." : "재고가 부족하여 주문이 불가능합니다.");
+//            } else System.out.println("없는 제품입니다. 다시 입력해주세요");
 
             break;
           }
+        case 5:
+          return;
         default:
           System.out.println("올바른 동작(번호)을 선택하세요.");
       }
     }
   }
-
 
   static void inputClothes(PremiumShoppingMall shoppingMall) {
 
@@ -100,8 +105,17 @@ public class Main {
     System.out.println("사이즈 입력(S,M,L,XL,XXL,XXXL)");
     String size = scanner.nextLine();
 
-    Clothing clothes = new Clothing(name, price, stock, size);
-    shoppingMall.addProduct(clothes);
+    if (size.equals("S")
+        || size.equals("M")
+        || size.equals("L")
+        || size.equals("XL")
+        || size.equals("XXL")
+        || size.equals("XXXL")) {
+
+      Clothing clothes = new Clothing(name, price, stock, size);
+      shoppingMall.addProduct(clothes);
+
+    } else System.out.println("없는 사이즈입니다. 다시 주문해주세요.");
   }
 
   static void inputElectronics(PremiumShoppingMall shoppingMall) {

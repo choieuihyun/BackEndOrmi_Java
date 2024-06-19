@@ -28,4 +28,6 @@ public abstract class Product {
         return stock;
     }
 
+    public abstract String getInfo();
+
 }
